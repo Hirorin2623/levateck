@@ -3,14 +3,22 @@
     <head>
         <meta charset="utf-8">
         <title>Blog</title>
-        <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     </head>
     <body>
         <h1>Blog Name</h1>
+
         [<a href='/posts/create'>create</a>]
+   
         <div class='posts'>
             @foreach ($posts as $post)
+             <form action="/posts/{{ $post->id }}" id="form_delete"{{ $post->id}} method="post" style="display:inline">
+            @csrf
+            @method('DELETE')
+            <input type="button" style="display:none">
+     <button type="button">delete</button> 
+     <p class="delete">[<span onclick="return deletePost(this);">delete</span>]</p>
+</form>
                 <div class='post'>
                     <h2 class='title'>
     <a href="/posts/{{ $post->id }}">{{ $post->title }}</a></h2>
@@ -22,5 +30,14 @@
         <div class='paginate'>
             {{ $posts->links() }}
         </div>
+        <script>
+            function deletePost(e){
+                'use strict';
+                if (confirm('消去すると復元できません。＼n本当に削除しますか？')){
+                document.getElementById('form_delete').submit();
+            }
+            
+     }
+        </script>
     </body>
 </html>
