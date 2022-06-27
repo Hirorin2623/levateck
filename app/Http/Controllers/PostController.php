@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
-use App\Http\Requests\PostRequest; // useする
+use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
 {
@@ -32,6 +32,11 @@ class PostController extends Controller
     {
     return view('posts/edit')->with(['post' => $post]);
     }
+        public function delete(Post $post)
+    {
+    $post->delete();
+    return redirect('/');
+    }
     public function update(PostRequest $request, Post $post)
     {
     $input_post = $request['post'];
@@ -39,4 +44,5 @@ class PostController extends Controller
 
     return redirect('/posts/' . $post->id);
     }
+
 }
